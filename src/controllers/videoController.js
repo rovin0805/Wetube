@@ -42,11 +42,7 @@ export const postEdit = async (req, res) => {
     await Video.findByIdAndUpdate(id, {
       title,
       description,
-      hashtags: hashtags
-        .split(',')
-        .map((word) =>
-          word.trim().startsWith('#') ? word.trim() : `#${word.trim()}`
-        ),
+      hashtags,
     });
     return res.redirect(`/videos/${id}`);
   } catch (err) {
@@ -63,11 +59,7 @@ export const postUpload = async (req, res) => {
   const videoObj = {
     title,
     description,
-    hashtags: hashtags
-      .split(',')
-      .map((word) =>
-        word.trim().startsWith('#') ? word.trim() : `#${word.trim()}`
-      ),
+    hashtags,
   };
 
   try {
