@@ -4,7 +4,7 @@ block content
     if error
         span=error
     form(method="POST")
-        input(placeholder="Title", name="title", type="text", required, maxLength={50})
-        input(placeholder="Description", name="description", type="text", required, maxLength={200})
+        input(placeholder="Title", name="title", type="text", required, maxLength=50)
+        input(placeholder="Description", name="description", type="text", required, maxLength=200)
         input(placeholder="Hashtags (separated by comma)", name="hashtags", type="text", required)
         input(type="submit", value="Upload Video")
