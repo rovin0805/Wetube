@@ -74,3 +74,13 @@ export const postUpload = async (req, res) => {
     });
   }
 };
+
+export const deleteVideo = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Video.findByIdAndDelete(id);
+    return res.redirect('/');
+  } catch (err) {
+    return res.render('Delete Error');
+  }
+};
