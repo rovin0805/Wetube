@@ -5,7 +5,7 @@ export const home = async (req, res) => {
   //   res.render('home', { pageTitle: 'Home', videos })
   // );
   try {
-    const videos = await Video.find({});
+    const videos = await Video.find({}).sort({ createdAt: 'desc' });
     return res.render('home', { pageTitle: 'Home', videos });
   } catch (err) {
     return res.render('Server Error');
