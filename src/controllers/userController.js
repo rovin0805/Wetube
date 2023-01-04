@@ -56,6 +56,8 @@ export const postLogin = async (req, res) => {
       });
     }
 
+    req.session.loggedIn = true;
+    req.session.user = user;
     return res.redirect('/');
   } catch (err) {
     return res.status(400).render('login', {
