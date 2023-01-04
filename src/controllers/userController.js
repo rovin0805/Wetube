@@ -1,4 +1,5 @@
 import User from '../models/User';
+import bcrypt from 'bcrypt';
 
 export const getJoin = (req, res) =>
   res.render('join', { pageTitle: 'Create Account' });
@@ -25,15 +26,48 @@ export const postJoin = async (req, res) => {
     await User.create({ email, username, password, location });
     res.redirect('/login');
   } catch (err) {
-    res.send('Create Account Error');
+    return res.status(400).render('join', {
+      pageTitle: 'Create Account',
+      error: err._message,
+    });
+  }
+};
+
+export const getLogin = (req, res) =>
+  res.render('login', { pageTitle: 'Log In' });
+
+export const postLogin = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(400).render('login', {
+        pageTitle: 'Log In',
+        error: 'An account with this username does not exist',
+      });
+    }
+
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) {
+      return res.status(400).render('login', {
+        pageTitle: 'Log In',
+        error: 'Wrong password',
+      });
+    }
+
+    return res.redirect('/');
+  } catch (err) {
+    return res.status(400).render('login', {
+      pageTitle: 'Log In',
+      error: err._message,
+    });
   }
 };
 
 export const edit = (req, res) => res.send('Edit User');
 
 export const remove = (req, res) => res.send('Remove User');
-
-export const login = (req, res) => res.send('Login');
 
 export const logout = (req, res) => res.send('Log out');
 

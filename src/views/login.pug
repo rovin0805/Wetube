@@ -1,0 +1,14 @@
+extends base
+
+block content 
+    if error 
+        span=error
+    form(method="POST")
+        input(name='username', type='username', required, placeholder='Username')
+        input(name='password', type='password', required, placeholder='Password')
+        input(value='Log In', type='submit')
+    hr
+    div 
+        p Don't you have an account?
+        a(href='/join') Join &rarr;
+        
