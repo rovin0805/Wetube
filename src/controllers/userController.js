@@ -7,7 +7,7 @@ export const getJoin = (req, res) =>
 
 export const postJoin = async (req, res) => {
   try {
-    const { email, username, password, password2, location } = req.body;
+    const { email, name, username, password, password2, location } = req.body;
 
     if (password !== password2) {
       return res.status(400).render('join', {
@@ -24,7 +24,7 @@ export const postJoin = async (req, res) => {
       });
     }
 
-    await User.create({ email, username, password, location });
+    await User.create({ email, name, username, password, location });
     res.redirect('/login');
   } catch (err) {
     return res.status(400).render('join', {
@@ -185,6 +185,51 @@ export const postEdit = async (req, res) => {
   } catch (err) {
     return res.send('Edit Video Error');
   }
+};
+
+export const getChangePassword = (req, res) => {
+  if (req.session.socialOnly) {
+    return res.redirect('/');
+  }
+  res.render('change-password', { pageTitle: 'Change Password' });
+};
+
+export const postChangePassword = async (req, res) => {
+  const {
+    session: {
+      user: { _id, password },
+    },
+    body: { oldPassword, newPassword, newPasswordConfirmation },
+  } = req;
+
+  const match = await bcrypt.compare(oldPassword, password);
+  if (!match) {
+    return res.status(400).render('change-password', {
+      pageTitle: 'Change Password',
+      error: 'The current password is incorrect.',
+    });
+  }
+
+  if (newPassword !== newPasswordConfirmation) {
+    return res.status(400).render('change-password', {
+      pageTitle: 'Change Password',
+      error: 'The new password dose not match the confirmation.',
+    });
+  }
+
+  if (oldPassword === newPassword) {
+    return res.status(400).render('change-password', {
+      pageTitle: 'Change Password',
+      error: 'The old password equals new password',
+    });
+  }
+
+  const user = await User.findById(_id);
+  user.password = newPassword;
+  await user.save();
+
+  req.session.destroy();
+  return res.redirect('/login');
 };
 
 export const see = (req, res) => res.send('See User');

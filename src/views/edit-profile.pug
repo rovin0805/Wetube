@@ -9,3 +9,6 @@ block content
         input(placeholder="Username", name="username", type="text", required, value=user.username)
         input(placeholder="Location", name="location", type="text", required, value=user.location)
         input(type="submit", value="Update Profile")
+        if !user.socialOnly
+            br
+            a(href='change-password') Change Password &rarr;
