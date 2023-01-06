@@ -8,7 +8,7 @@ export const home = async (req, res) => {
     const videos = await Video.find({}).sort({ createdAt: 'desc' });
     return res.render('home', { pageTitle: 'Home', videos });
   } catch (err) {
-    return res.render('Server Error');
+    return res.send('Server Error');
   }
 };
 
@@ -24,7 +24,7 @@ export const watch = async (req, res) => {
         .render('404', { pageTitle: 'Video Not Found 404' });
     }
   } catch (err) {
-    return res.render('Watch Video Error');
+    return res.send('Watch Video Error');
   }
 };
 
@@ -39,7 +39,7 @@ export const getEdit = async (req, res) => {
     }
     return res.render('edit', { pageTitle: `Edit : ${video.title} `, video });
   } catch (err) {
-    return res.render('Edit Video Error');
+    return res.send('Edit Video Error');
   }
 };
 
@@ -60,13 +60,12 @@ export const postEdit = async (req, res) => {
     });
     return res.redirect(`/videos/${id}`);
   } catch (err) {
-    return res.render('Update Error');
+    return res.send('Update Error');
   }
 };
 
-export const getUpload = (req, res) => {
-  return res.render('upload', { pageTitle: 'Upload Video' });
-};
+export const getUpload = (req, res) =>
+  res.render('upload', { pageTitle: 'Upload Video' });
 
 export const postUpload = async (req, res) => {
   try {
@@ -95,7 +94,7 @@ export const deleteVideo = async (req, res) => {
     await Video.findByIdAndDelete(id);
     return res.redirect('/');
   } catch (err) {
-    return res.render('Delete Error');
+    return res.send('Delete Error');
   }
 };
 
@@ -112,6 +111,6 @@ export const search = async (req, res) => {
     }
     return res.render('search', { pageTitle: 'Search', videos });
   } catch (err) {
-    return res.render('Search Error');
+    return res.send('Search Error');
   }
 };
