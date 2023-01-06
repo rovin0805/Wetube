@@ -155,9 +155,10 @@ export const postEdit = async (req, res) => {
   try {
     const {
       session: {
-        user: { _id, email: oldEmail, username: oldUsername },
+        user: { _id, email: oldEmail, username: oldUsername, avatarUrl },
       },
       body: { email, username },
+      file,
     } = req;
 
     let searchFilter = [];
@@ -177,9 +178,13 @@ export const postEdit = async (req, res) => {
       }
     }
 
-    const updatedUser = await User.findByIdAndUpdate(_id, req.body, {
-      new: true,
-    });
+    const updatedUser = await User.findByIdAndUpdate(
+      _id,
+      { ...req.body, avatarUrl: file?.path || avatarUrl },
+      {
+        new: true,
+      }
+    );
     req.session.user = updatedUser;
     return res.redirect('/users/edit');
   } catch (err) {

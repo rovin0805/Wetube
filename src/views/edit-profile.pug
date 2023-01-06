@@ -3,11 +3,14 @@ extends base
 block content 
     if error 
         span=error
-    form(method="POST")
+    img(src="/"+user.avatarUrl, width="100", height="100")
+    form(method="POST" enctype="multipart/form-data")
+        label(for='avatar') Avatar 
+        input(type='file', accept=".png, .jpg, .jepg", id='avatar', name='avatar')
         input(placeholder="Name", name="name", type="text", required, value=user.name)
         input(placeholder="Email", name="email", type="email", required, value=user.email)
         input(placeholder="Username", name="username", type="text", required, value=user.username)
-        input(placeholder="Location", name="location", type="text", required, value=user.location)
+        input(placeholder="Location", name="location", type="text", value=user.location)
         input(type="submit", value="Update Profile")
         if !user.socialOnly
             br

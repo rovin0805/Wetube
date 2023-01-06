@@ -1,3 +1,5 @@
+import multer from 'multer';
+
 export const localMiddleware = (req, res, next) => {
   res.locals.loggedIn = !!req.session.loggedIn;
   res.locals.user = req.session.user || {};
@@ -20,3 +22,5 @@ export const publicOnlyMiddleware = (req, res, next) => {
     next();
   }
 };
+
+export const uploadFiles = multer({ dest: 'uploads/' });
