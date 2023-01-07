@@ -28,7 +28,7 @@ userRouter
   .all(protectorMiddleware)
   .get(getChangePassword)
   .post(postChangePassword);
-userRouter.get(':id', see);
+userRouter.get('/:id', see);
 userRouter.get('/auth/github', publicOnlyMiddleware, startGithubLogin);
 userRouter.get(
   '/auth/github/callback',
