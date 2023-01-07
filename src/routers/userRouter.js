@@ -8,7 +8,7 @@ import {
   postEdit,
   getChangePassword,
   postChangePassword,
-} from '../controllers/userController';
+} from '../controllers/user';
 import {
   protectorMiddleware,
   publicOnlyMiddleware,
