@@ -1,7 +1,7 @@
 import User from '../../models/User';
 
 export const getEdit = (req, res) =>
-  res.render('edit-profile', { pageTitle: 'Edit Profile' });
+  res.render('user/edit-profile', { pageTitle: 'Edit Profile' });
 
 export const postEdit = async (req, res) => {
   try {
@@ -23,7 +23,7 @@ export const postEdit = async (req, res) => {
     if (searchFilter.length > 0) {
       const foundUser = await User.find({ $or: searchFilter });
       if (foundUser && foundUser._id.toString() !== _id) {
-        return res.status(400).render('edit-profile', {
+        return res.status(400).render('user/edit-profile', {
           pageTitle: 'Edit Profile',
           error: 'This username/email is already taken.',
         });

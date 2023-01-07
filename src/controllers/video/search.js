@@ -11,7 +11,7 @@ const search = async (req, res) => {
         },
       });
     }
-    return res.render('search', { pageTitle: 'Search', videos });
+    return res.render('video/search', { pageTitle: 'Search', videos });
   } catch (err) {
     return res.send('Search Error');
   }

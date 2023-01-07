@@ -7,7 +7,7 @@ const see = async (req, res) => {
     if (!user) {
       return res.status(400).render('404', { pageTitle: 'User Not Found 404' });
     }
-    return res.render('profile', {
+    return res.render('user/profile', {
       pageTitle: `${user.username}'s Profile`,
       user,
     });

@@ -17,7 +17,10 @@ export const getEdit = async (req, res) => {
     if (String(video.owner) !== userId) {
       return res.status(403).redirect('/');
     }
-    return res.render('edit', { pageTitle: `Edit : ${video.title} `, video });
+    return res.render('video/edit', {
+      pageTitle: `Edit : ${video.title} `,
+      video,
+    });
   } catch (err) {
     return res.send('Edit Video Error');
   }

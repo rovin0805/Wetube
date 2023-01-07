@@ -2,7 +2,7 @@ import Video from '../../models/Video';
 import User from '../../models/User';
 
 export const getUpload = (req, res) =>
-  res.render('upload', { pageTitle: 'Upload Video' });
+  res.render('video/upload', { pageTitle: 'Upload Video' });
 
 export const postUpload = async (req, res) => {
   try {
@@ -30,7 +30,7 @@ export const postUpload = async (req, res) => {
 
     return res.redirect('/');
   } catch (err) {
-    return res.status(400).render('upload', {
+    return res.status(400).render('video/upload', {
       pageTitle: 'Upload Video',
       error: err._message,
     });
