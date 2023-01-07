@@ -4,11 +4,14 @@ block content
   video(src="/"+video.fileUrl, controls, width=500, height=250)
   div
     p=video.description
+    p Uploaded by 
+      a(href=`/users/${owner._id}`) #{owner.username}
     div
       each hashtag in video.hashtags
           span #{hashtag} 
     small=video.createdAt
   br
-  a(href=`${video.id}/edit`) Edit Video &rarr;
-  br
-  a(href=`${video.id}/delete`) Delete Video &rarr;
+  if String(video.owner) === String(user._id)
+    a(href=`${video.id}/edit`) Edit Video &rarr;
+    br
+    a(href=`${video.id}/delete`) Delete Video &rarr;
