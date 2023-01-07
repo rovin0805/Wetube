@@ -16,7 +16,7 @@ export const home = async (req, res) => {
 export const watch = async (req, res) => {
   try {
     const { id } = req.params;
-    const video = await (await Video.findById(id)).populate('owner');
+    const video = await Video.findById(id).populate('owner');
     if (!video) {
       return res
         .status(404)
@@ -86,7 +86,11 @@ export const postUpload = async (req, res) => {
 
     // const video = new Video(videoObj);
     // await video.save();
-    await Video.create(videoObj);
+    const newVideo = await Video.create(videoObj);
+    const user = await User.findById(_id);
+    user.videos.push(newVideo._id);
+    await user.save();
+
     return res.redirect('/');
   } catch (err) {
     return res.status(400).render('upload', {
