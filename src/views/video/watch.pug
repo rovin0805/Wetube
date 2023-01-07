@@ -1,16 +1,16 @@
 extends ../base
 
 block content
-  video(src="/"+video.fileUrl, controls, width=500, height=250)
+  video(src="/"+video.fileUrl, controls, width=500, height=250).video
   div
     p=video.description
-    div
-      each hashtag in video.hashtags
-          span #{hashtag} 
-    div
-      small  Uploaded by 
-        a(href=`/users/${video.owner._id}`) #{video.owner.username}
     small=video.createdAt
+  div
+    each hashtag in video.hashtags
+        span #{hashtag} 
+  div
+    small Uploaded by 
+      a(href=`/users/${video.owner._id}`)=video.owner.username
   br
   if String(video.owner._id) === String(user._id)
     a(href=`${video.id}/edit`) Edit Video &rarr;

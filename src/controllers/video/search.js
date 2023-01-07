@@ -9,7 +9,7 @@ const search = async (req, res) => {
         title: {
           $regex: new RegExp(keyword, 'i'),
         },
-      });
+      }).populate('owner');
     }
     return res.render('video/search', { pageTitle: 'Search', videos });
   } catch (err) {

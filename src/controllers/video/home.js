@@ -5,7 +5,9 @@ const home = async (req, res) => {
     // Video.find({}, (err, videos) =>
     //   res.render('home', { pageTitle: 'Home', videos })
     // );
-    const videos = await Video.find({}).sort({ createdAt: 'desc' });
+    const videos = await Video.find({})
+      .sort({ createdAt: 'desc' })
+      .populate('owner');
     return res.render('home', { pageTitle: 'Home', videos });
   } catch (err) {
     return res.send('Server Error');
