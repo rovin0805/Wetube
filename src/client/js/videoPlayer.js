@@ -1,3 +1,5 @@
+const { default: fetch } = require('cross-fetch');
+
 const video = document.querySelector('video');
 const playBtn = document.getElementById('play');
 const playBtnIcon = playBtn.querySelector('i');
@@ -117,6 +119,11 @@ const handleMouseLeave = () => {
 
 const hideControls = () => videoControls.classList.remove('showing');
 
+const handleEnded = () => {
+  const { id } = videoContainer.dataset;
+  fetch(`/api/videos/${id}/view`, { method: 'POST' });
+};
+
 playBtn.addEventListener('click', handlePlay);
 window.addEventListener(
   'keydown',
@@ -133,6 +140,7 @@ video.readyState
   : video.addEventListener('loadedmetadata', handleLoadedMetaData);
 video.addEventListener('timeupdate', handleTimeUpdate);
 video.addEventListener('click', handlePlay);
+video.addEventListener('ended', handleEnded);
 videoContainer.addEventListener('mousemove', handleMouseMove);
 videoContainer.addEventListener('mouseleave', handleMouseLeave);
 timeline.addEventListener('input', handleInputTimeline);
