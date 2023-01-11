@@ -10,14 +10,15 @@ export const postUpload = async (req, res) => {
       session: {
         user: { _id },
       },
-      file: { path },
+      files: { video, thumbnail },
       body: { title, description, hashtags },
     } = req;
     const videoObj = {
       title,
       description,
       hashtags: Video.formatHashtags(hashtags),
-      fileUrl: path,
+      fileUrl: video[0].path,
+      thumbnailUrl: thumbnail[0].path,
       owner: _id,
     };
 
