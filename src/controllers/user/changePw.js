@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 
 export const getChangePassword = (req, res) => {
   if (req.session.socialOnly) {
+    req.flash('error', "Can't change password.");
     return res.redirect('/');
   }
   res.render('user/change-password', { pageTitle: 'Change Password' });
@@ -43,5 +44,6 @@ export const postChangePassword = async (req, res) => {
   await user.save();
 
   req.session.destroy();
+  req.flash('success', 'Changes saved.');
   return res.redirect('user/login');
 };

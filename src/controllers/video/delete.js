@@ -16,6 +16,7 @@ const deleteVideo = async (req, res) => {
       return res.status(404).render('404', { pageTitle: 'Video not found.' });
     }
     if (String(video.owner) !== userId) {
+      req.flash('error', 'You are not the the owner of the video.');
       return res.status(403).redirect('/');
     }
 

@@ -38,6 +38,8 @@ export const postEdit = async (req, res) => {
       }
     );
     req.session.user = updatedUser;
+
+    req.flash('success', 'Changes saved.');
     return res.redirect('/users/edit');
   } catch (err) {
     return res.send('Edit Video Error');
