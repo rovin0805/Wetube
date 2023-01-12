@@ -5,3 +5,4 @@ export { default as search } from './search';
 export { getEdit, postEdit } from './edit';
 export { getUpload, postUpload } from './upload';
 export { default as registerView } from './registerView';
+export { default as createComment } from './createComment';
