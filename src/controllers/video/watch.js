@@ -3,7 +3,9 @@ import Video from '../../models/Video';
 const watch = async (req, res) => {
   try {
     const { id } = req.params;
-    const video = await Video.findById(id).populate('owner');
+    const video = await Video.findById(id)
+      .populate('owner')
+      .populate('comments');
     if (!video) {
       return res
         .status(404)
