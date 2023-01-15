@@ -32,7 +32,7 @@ export const postEdit = async (req, res) => {
 
     const updatedUser = await User.findByIdAndUpdate(
       _id,
-      { ...req.body, avatarUrl: file?.path || avatarUrl },
+      { ...req.body, avatarUrl: file?.location || avatarUrl },
       {
         new: true,
       }
