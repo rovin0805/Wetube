@@ -40,19 +40,23 @@ const s3 = new S3Client({
 
 const s3ImageUploader = multerS3({
   s3,
-  bucket: 'wetube-ej/images',
+  bucket: 'wetube-ej',
   acl: 'public-read',
   key: function (req, file, cb) {
-    cb(null, Date.now().toString());
+    const newFileName = Date.now() + '-' + file.originalname;
+    const fullPath = 'images/' + newFileName;
+    cb(null, fullPath);
   },
 });
 
 const s3VideoUploader = multerS3({
   s3,
-  bucket: 'wetube-ej/videos',
+  bucket: 'wetube-ej',
   acl: 'public-read',
   key: function (req, file, cb) {
-    cb(null, Date.now().toString());
+    const newFileName = Date.now() + '-' + file.originalname;
+    const fullPath = 'videos/' + newFileName;
+    cb(null, fullPath);
   },
 });
 
