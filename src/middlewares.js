@@ -71,3 +71,22 @@ export const videoUpload = multer({
   limits: { fieldSize: 100000000 },
   storage: isHeroku ? s3VideoUploader : undefined,
 });
+
+export const s3DeleteAvatarMiddleware = (req, res, next) => {
+  if (!req.file || !isHeroku) {
+    return next();
+  }
+  s3.deleteObject(
+    {
+      Bucket: `wetube-ej`,
+      Key: `images/${req.session.user.avatarURL.split('/')[4]}`,
+    },
+    (err, data) => {
+      if (err) {
+        throw err;
+      }
+      console.log(`s3 deleteObject`, data);
+    }
+  );
+  next();
+};
