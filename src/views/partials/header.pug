@@ -18,7 +18,10 @@ header
                         if !user.avatarUrl
                             span 😀
                         else
-                            img.header__avatar(src=user.avatarUrl, crossorigin)
+                            if isHeroku
+                                img.header__avatar(src=user.avatarUrl, crossorigin)
+                            else
+                                img.header__avatar(src="/" + user.avatarUrl)
             else
                 li
                     a(href="/join").header__btn Join
