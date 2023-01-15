@@ -5,9 +5,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev:server": "nodemon",
-    "dev:assets": "webpack",
+    "dev:assets": "webpack --mode=development -w",
     "build:server": "babel src -d build",
-    "start": "node build/init.js"
+    "build:assets": "webpack --mode=production",
+    "start": "node build/init.js",
+    "build": "npm run build:server && npm run build:assets"
   },
   "keywords": [],
   "author": "",
