@@ -1,6 +1,7 @@
 import multer from 'multer';
 import multerS3 from 'multer-s3';
 import { S3Client } from '@aws-sdk/client-s3';
+import AWS from 'aws-sdk';
 
 const isHeroku = process.env.NODE_ENV === 'production';
 
@@ -76,16 +77,21 @@ export const s3DeleteAvatarMiddleware = (req, res, next) => {
   if (!req.file || !isHeroku) {
     return next();
   }
+  AWS.config.update({
+    region: 'ap-northeast-1',
+    accessKeyId: process.env.AWS_KEY_ID,
+    secretAccessKey: process.env.AWS_ACCESS_KEY,
+  });
+  const s3 = new AWS.S3();
   s3.deleteObject(
     {
       Bucket: `wetube-ej`,
-      Key: `images/${req.session.user.avatarURL.split('/')[4]}`,
+      Key: `images/${req.session.user?.avatarUrl?.split('/')[4]}`,
     },
     (err, data) => {
       if (err) {
         throw err;
       }
-      console.log(`s3 deleteObject`, data);
     }
   );
   next();
